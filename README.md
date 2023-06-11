@@ -59,10 +59,10 @@
 ![alt text](https://github.com/kottng/OS_IDZ_4/blob/main/server.png)
 
 
-![alt text](https://github.com/kottng/OS_IDZ_4/blob/main/client 1.png)
+![alt text](https://github.com/kottng/OS_IDZ_4/blob/main/client_1.png)
 
 
-![alt text](https://github.com/kottng/OS_IDZ_4/blob/main/client 2.png)
+![alt text](https://github.com/kottng/OS_IDZ_4/blob/main/client_2.png)
 
 
-![alt text](https://github.com/kottng/OS_IDZ_4/blob/main/client 3.png)
+![alt text](https://github.com/kottng/OS_IDZ_4/blob/main/client_3.png)
