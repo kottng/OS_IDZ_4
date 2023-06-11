@@ -55,7 +55,7 @@
       
 3. Итог выполнения программы:
 
-Запуск и вывод сервера:
+- Запуск и вывод сервера:
 
 
 ![alt text](https://github.com/kottng/OS_IDZ_4/blob/main/server.png)
