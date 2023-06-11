@@ -58,7 +58,7 @@
     <source media="(prefers-color-scheme: dark)" srcset="server.png">
 </picture>
 
-![alt text](https://github.com/kottng/OS_IDZ_4/client 1.png)
+![alt text](https://github.com/kottng/OS_IDZ_4/blob/main/server.png)
 
 
 ![alt text](https://github.com/kottng/OS_IDZ_4/client 2.png)
