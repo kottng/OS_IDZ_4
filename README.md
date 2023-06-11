@@ -54,3 +54,8 @@
       
       
 3. Итог выполнения программы:
+
+![alt text](https://github.com/kottng/OS_IDZ_4/server.png)
+![alt text](https://github.com/kottng/OS_IDZ_4/client 1.png)
+![alt text](https://github.com/kottng/OS_IDZ_4/client 2.png)
+![alt text](https://github.com/kottng/OS_IDZ_4/client 3.png)
