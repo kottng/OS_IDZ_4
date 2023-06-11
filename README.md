@@ -54,9 +54,9 @@
       
       
 3. Итог выполнения программы:
-
-![alt text](https://github.com/kottng/OS_IDZ_4/server.png)
-
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/kottng/OS_IDZ_4/server.png">
+</picture>
 
 ![alt text](https://github.com/kottng/OS_IDZ_4/client 1.png)
 
