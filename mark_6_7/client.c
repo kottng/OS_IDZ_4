@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
     // Создание клиентского сокета
     clientSocket = socket(AF_INET, SOCK_DGRAM, 0);
     if (clientSocket < 0) {
-        perror("Ошибка при создании сокета");
+        perror("Error while creating socket\n");
         exit(1);
     }
 
@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
     ssize_t bytesReceived = recvfrom(clientSocket, lands, sizeof(lands), 0, (struct sockaddr *) &s_response,
                                      &len_of_addr);
     if (bytesReceived < 0) {
-        perror("Ошибка при получении массива участков от сервера");
+        perror("Error while receiving an array of lands from server");
         exit(1);
     }
     printf("An array of lands received:\n");
@@ -107,8 +107,6 @@ int main(int argc, char *argv[]) {
             printf("team %d did not find anything\n", id);
             i += 2;
         }
-        printf("PROCESS 1 : Work is ended\n");
-        printf("Shared value in process 1 %d\n", *sharedValue);
         *sharedValue = 0;
         exit(1);
     }
@@ -126,10 +124,10 @@ int main(int argc, char *argv[]) {
             if (bytesRead >= 0) {
                 *sharedValue = 0;
             }
-            printf("Shared value in process 2 %d\n", *sharedValue);
+
             sleep(2);
         } while (bytesRead < 0 && *sharedValue);
-        printf("Shared value in process 2 %d\n", *sharedValue);
+
         sprintf(buffer, "team %d did not find anything\n", id - 1);
         // Найден клад, отправка сообщения на сервер
         if (sendto(clientSocket, buffer, sizeof(buffer), 0, (struct sockaddr *) &serverAddr,
@@ -137,7 +135,7 @@ int main(int argc, char *argv[]) {
             perror("Error wwhile sending a message to the server");
             exit(1);
         }
-        printf("PROCESS 2 : Work is ended\n");
+
         exit(1);
     }
 
