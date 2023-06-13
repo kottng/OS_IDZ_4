@@ -150,7 +150,7 @@ int main(int argc, char *argv[]) {
                     is_treasure_found = 1;
                     flague_to_exit = 0;
                 } else {
-                    if (counter_of_ended < 3) {
+                    if (counter_of_ended < clients_number) {
                         ++counter_of_ended;
                         printf("counter_of_ended %d\n", counter_of_ended);
                     } else {
