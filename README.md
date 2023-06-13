@@ -142,4 +142,34 @@
 3. Итог выполнения программы
 
 
+- Запуск и вывод сервера:
+
+
+![alt text](https://github.com/kottng/OS_IDZ_4/blob/main/server_6_7.png)
+
+
+- Запуск и вывод первого клиента:
+
+
+![alt text](https://github.com/kottng/OS_IDZ_4/blob/main/client_1_6_7.png)
+
+
+- Запуск и вывод второго клиента:
+
+
+![alt text](https://github.com/kottng/OS_IDZ_4/blob/main/client_2_6_7.png)
+
+
+- Запуск и вывод третьего клиента:
+
+
+![alt text](https://github.com/kottng/OS_IDZ_4/blob/main/client_3_6_7.png)
+
+
+- Запуск и вывод outer:
+
+
+![alt text](https://github.com/kottng/OS_IDZ_4/blob/main/outer_6_7.png)
+
+
 
