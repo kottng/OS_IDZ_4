@@ -135,7 +135,6 @@ int main(int argc, char *argv[]) {
             perror("Error wwhile sending a message to the server");
             exit(1);
         }
-
         exit(1);
     }
 
