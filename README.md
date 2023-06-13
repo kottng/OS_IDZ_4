@@ -151,13 +151,13 @@
 - Запуск и вывод первого клиента:
 
 
-![alt text](https://github.com/kottng/OS_IDZ_4/blob/main/client_1_6_7.png)
+![alt text](https://github.com/kottng/OS_IDZ_4/blob/main/client_2_6_7.png)
 
 
 - Запуск и вывод второго клиента:
 
 
-![alt text](https://github.com/kottng/OS_IDZ_4/blob/main/client_2_6_7.png)
+![alt text](https://github.com/kottng/OS_IDZ_4/blob/main/client_1_6_7.png)
 
 
 - Запуск и вывод третьего клиента:
