@@ -69,6 +69,24 @@ int main(int argc, char *argv[]) {
     }
 
     // здесь начинается обработка
+    int pid_2;
+    childPid2 = fork();
+    pid_2 = getpid();
+    if (childPid2 < 0) {
+        perror("Ошибка при создании нового процесса");
+        exit(1);
+    } else if (childPid2 == 0) {
+        int bytesRead = -1;
+        memset(buffer, 0, sizeof(buffer));
+        do {
+            bytesRead = recvfrom(clientSocket, buffer, sizeof(buffer), 0, (struct sockaddr *) &s_response,
+                                 &len_of_addr);
+            sleep(2);
+        } while (bytesRead < 0);
+        printf("%s\n", buffer);
+        kill(0, SIGTERM);
+        exit(1);
+    }
     childPid1 = fork();
     if (childPid1 < 0) {
         perror("Ошибка при создании нового процесса");
@@ -90,25 +108,19 @@ int main(int argc, char *argv[]) {
                 break;
             }
             printf("team %d did not find anything\n", id);
+            if (sendto(clientSocket, "team did not find anything", sizeof("team did not find anything"), 0, (struct sockaddr *) &serverAddr,
+                       sizeof(serverAddr)) < 0) {
+                perror("Ошибка при отправке сообщения на сервер");
+                exit(1);
+            }
             i += 2;
         }
-        kill(0, SIGTERM);
-        exit(1);
-    }
-    childPid2 = fork();
-    if (childPid2 < 0) {
-        perror("Ошибка при создании нового процесса");
-        exit(1);
-    } else if (childPid2 == 0) {
-        int bytesRead = -1;
-        memset(buffer, 0, sizeof(buffer));
-        do {
-            bytesRead = recvfrom(clientSocket, buffer, sizeof(buffer), 0, (struct sockaddr *) &s_response,
-                                 &len_of_addr);
-            sleep(2);
-        } while (bytesRead < 0);
-        printf("%s\n", buffer);
-        kill(0, SIGTERM);
+        if (sendto(clientSocket, "team did not find anything", sizeof("team did not find anything"), 0, (struct sockaddr *) &serverAddr,
+                   sizeof(serverAddr)) < 0) {
+            perror("Ошибка при отправке сообщения на сервер");
+            exit(1);
+        }
+        kill(pid_2, SIGTERM);
         exit(1);
     }
 
