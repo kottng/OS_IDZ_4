@@ -13,10 +13,6 @@
 #define MAX_CLIENTS 10
 #define BUFFER_SIZE 256
 
-void handleClient(int clientSocket, int start);
-
-void broadcastMessage(const char *message, int *clientSockets);
-
 int numClients = 0;
 
 int main(int argc, char *argv[]) {
@@ -151,11 +147,9 @@ int main(int argc, char *argv[]) {
                 strncpy(buffer_2, buffer, 25);
                 printf("buffer 2 is %s\n", buffer_2);
                 if (strcmp(buffer_2, "Treasure is found by team") == 0) {
-                    printf("OH YEAH\n");
                     is_treasure_found = 1;
                     flague_to_exit = 0;
                 } else {
-                    printf("ALL IS WRONG\n");
                     if (counter_of_ended < 3) {
                         ++counter_of_ended;
                         printf("counter_of_ended %d\n", counter_of_ended);
