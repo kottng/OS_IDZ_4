@@ -14,14 +14,14 @@
 
 #define MAX_CLIENTS 10
 #define BUFFER_SIZE 256
+
 #define SHARED_MEMORY_KEY 12345
 #define SHARED_MEMORY_SIZE sizeof(int)
-
 int numClients = 0;
 
 int main(int argc, char *argv[]) {
     int shmId;
-    int *counter_of_ended;
+    int *sharedValue;
     int serverSocket;
     struct sockaddr_in serverAddr;
     pid_t childPid;
@@ -38,12 +38,12 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    counter_of_ended = (int *) shmat(shmId, NULL, 0);
-    if (counter_of_ended == (int *) -1) {
+    sharedValue = (int *) shmat(shmId, NULL, 0);
+    if (sharedValue == (int *) -1) {
         perror("Failed to attach shared memory");
         exit(1);
     }
-    *counter_of_ended = 0;
+    *sharedValue = 1;
 
     // Создание серверного сокета
     serverSocket = socket(AF_INET, SOCK_DGRAM, 0);
@@ -113,7 +113,7 @@ int main(int argc, char *argv[]) {
             char buffer[BUFFER_SIZE];
             int bytesRead = -1;
             memset(buffer, 0, sizeof(buffer));
-
+            int counter_of_ended = 0;
             int is_treasure_found = 0;
             int flague_to_exit = 1;
             do {
@@ -124,8 +124,8 @@ int main(int argc, char *argv[]) {
                     is_treasure_found = 1;
                     flague_to_exit = 0;
                 } else {
-                    if (*counter_of_ended < clients_number) {
-                        ++(*counter_of_ended);
+                    if (counter_of_ended < clients_number) {
+                        ++counter_of_ended;
                     } else {
                         flague_to_exit = 0;
                     }
@@ -143,7 +143,7 @@ int main(int argc, char *argv[]) {
                 }
                 kill(0, SIGTERM);
             } else {
-                printf("Treasure was not found\n");
+                printf("Treasere was not found");
                 kill(0, SIGTERM);
             }
             exit(1);
