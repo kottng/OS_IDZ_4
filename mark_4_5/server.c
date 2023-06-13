@@ -8,18 +8,20 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <signal.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
 
 
 #define MAX_CLIENTS 10
 #define BUFFER_SIZE 256
-
-void handleClient(int clientSocket, int start);
-
-void broadcastMessage(const char *message, int *clientSockets);
+#define SHARED_MEMORY_KEY 12345
+#define SHARED_MEMORY_SIZE sizeof(int)
 
 int numClients = 0;
 
 int main(int argc, char *argv[]) {
+    int shmId;
+    int *counter_of_ended;
     int serverSocket;
     struct sockaddr_in serverAddr;
     pid_t childPid;
@@ -30,6 +32,18 @@ int main(int argc, char *argv[]) {
     }
     int areas_number = atoi(argv[2]);
     int clients_number = atoi(argv[3]);
+    shmId = shmget(SHARED_MEMORY_KEY, SHARED_MEMORY_SIZE, IPC_CREAT | 0666);
+    if (shmId == -1) {
+        perror("Failed to create shared memory");
+        exit(1);
+    }
+
+    counter_of_ended = (int *) shmat(shmId, NULL, 0);
+    if (counter_of_ended == (int *) -1) {
+        perror("Failed to attach shared memory");
+        exit(1);
+    }
+    *counter_of_ended = 0;
 
     // Создание серверного сокета
     serverSocket = socket(AF_INET, SOCK_DGRAM, 0);
@@ -82,7 +96,8 @@ int main(int argc, char *argv[]) {
             int counter = 0;
             for (j = 0; j < 2 * areas_number - 1; j += 2) {
                 lands[j] = counter;
-                lands[j + 1] = (rand()) % 2;
+//                lands[j + 1] = (rand()) % 2;
+                lands[j + 1] = 0;
 
                 ++counter;
             }
@@ -98,13 +113,26 @@ int main(int argc, char *argv[]) {
             char buffer[BUFFER_SIZE];
             int bytesRead = -1;
             memset(buffer, 0, sizeof(buffer));
+
+            int is_treasure_found = 0;
+            int flague_to_exit = 1;
             do {
                 memset(buffer, 0, sizeof(buffer));
                 bytesRead = recvfrom(serverSocket, buffer, sizeof(buffer), 0, (struct sockaddr *) &c_response,
                                      (socklen_t *) &len_of_client_addr);
+                if (strcmp(buffer, "IT IS DONE") == 0) {
+                    is_treasure_found = 1;
+                    flague_to_exit = 0;
+                } else {
+                    if (*counter_of_ended < clients_number) {
+                        ++(*counter_of_ended);
+                    } else {
+                        flague_to_exit = 0;
+                    }
+                }
                 sleep(2);
-            } while (bytesRead < 0);
-            if (bytesRead > 0) {
+            } while (flague_to_exit);
+            if (is_treasure_found) {
                 printf("%s\n", buffer);
                 for (j = 0; j < clients_number; ++j) {
                     if (sendto(serverSocket, "IT IS DONE", sizeof("IT IS DONE"), 0,
@@ -113,6 +141,9 @@ int main(int argc, char *argv[]) {
                         exit(1);
                     }
                 }
+                kill(0, SIGTERM);
+            } else {
+                printf("Treasure was not found\n");
                 kill(0, SIGTERM);
             }
             exit(1);
