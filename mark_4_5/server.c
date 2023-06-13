@@ -96,8 +96,8 @@ int main(int argc, char *argv[]) {
             int counter = 0;
             for (j = 0; j < 2 * areas_number - 1; j += 2) {
                 lands[j] = counter;
-//                lands[j + 1] = (rand()) % 2;
-                lands[j + 1] = 0;
+                lands[j + 1] = (rand()) % 2;
+//                lands[j + 1] = 0;
 
                 ++counter;
             }
